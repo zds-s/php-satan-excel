@@ -1,0 +1,24 @@
+{
+    "name": "death_satan/satan-excel",
+    "description": "Excel fast op",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "DeathSatan\\SatanExcel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "DeathSatan",
+            "email": "2771717608@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "phpoffice/phpspreadsheet": "dev-master"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "*"
+    }
+}
