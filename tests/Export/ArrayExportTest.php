@@ -1,15 +1,45 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This is an extension of Death-Satan
+ * Name PHP-Excel
+ *
+ * @link     https://www.cnblogs.com/death-satan
+ */
 namespace Export;
 
 use DeathSatan\SatanExcel\Export\ArrayExport;
 use DeathSatan\SatanExcel\Export\Config\ArrayExportConfig;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PHPUnit\Framework\TestCase;
-use SplFileObject;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class ArrayExportTest extends TestCase
 {
+    public function testSave()
+    {
+        $arrayExport = $this->getArrayExport();
+        self::assertInstanceOf(\SplFileObject::class, $arrayExport->save());
+    }
+
+    public function testGetSpreadsheet()
+    {
+        self::assertInstanceOf(Spreadsheet::class, $this->getArrayExport()->getSpreadsheet());
+    }
+
+    public function testGetConfig()
+    {
+        self::assertInstanceOf(ArrayExportConfig::class, $this->getArrayExport()->getConfig());
+    }
+
+    public function testToArray()
+    {
+        self::assertIsArray($this->getArrayExport()->toArray());
+    }
 
     private function getArrayExport()
     {
@@ -30,7 +60,7 @@ class ArrayExportTest extends TestCase
             '序号', '名称', '密码',
         ];
         $arrayExportConfig = new ArrayExportConfig();
-// 设置要导出的数据
+        // 设置要导出的数据
         $arrayExportConfig->setData($data);
         $arrayExportConfig->setFirstFields($filedTitles);
 
@@ -54,26 +84,5 @@ class ArrayExportTest extends TestCase
             }
         );
         return new ArrayExport($arrayExportConfig);
-    }
-
-    public function testSave()
-    {
-        $arrayExport = $this->getArrayExport();
-        self::assertInstanceOf(SplFileObject::class, $arrayExport->save());
-    }
-
-    public function testGetSpreadsheet()
-    {
-        self::assertInstanceOf(Spreadsheet::class, $this->getArrayExport()->getSpreadsheet());
-    }
-
-    public function testGetConfig()
-    {
-        self::assertInstanceOf(ArrayExportConfig::class, $this->getArrayExport()->getConfig());
-    }
-
-    public function testToArray()
-    {
-        self::assertIsArray($this->getArrayExport()->toArray());
     }
 }
