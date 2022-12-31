@@ -21,9 +21,11 @@ use PhpOffice\PhpSpreadsheet\Writer\BaseWriter;
 class ArrayExport implements BaseExport
 {
     private Spreadsheet $spreadsheet;
+    private ArrayExportConfig $config;
 
-    public function __construct(private ArrayExportConfig $config)
+    public function __construct(ArrayExportConfig $config)
     {
+        $this->config = $config;
         $this->spreadsheet = new Spreadsheet();
     }
 
