@@ -19,6 +19,14 @@
         "phpoffice/phpspreadsheet": "dev-master"
     },
     "require-dev": {
-        "symfony/var-dumper": "*"
+        "symfony/var-dumper": "*",
+        "phpunit/phpunit": "^9.5.0",
+        "phpstan/phpstan": "^1.8.0",
+        "friendsofphp/php-cs-fixer": "^3.8.0"
+    },
+    "scripts": {
+        "test": "phpunit -c phpunit.xml --colors=always",
+        "analyse": "phpstan analyse --memory-limit 300M -l 0 ./src",
+        "cs-fix": "php-cs-fixer fix $1"
     }
 }
