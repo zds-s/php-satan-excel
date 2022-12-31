@@ -22,7 +22,7 @@ jobs:
           ini-values: opcache.enable_cli=0
           coverage: none
       - name: Setup Packages
-        run: composer update -o --no-scripts
+        run: composer install -o --no-scripts -vvv
       - name: Run Test Cases
         run: |
           vendor/bin/php-cs-fixer fix --dry-run
