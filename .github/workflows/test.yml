@@ -10,7 +10,6 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         php-version: [ '7.3','7.4','8.0','8.1' ]
-        engine: [ ]
       max-parallel: 5
     steps:
       - name: Checkout
