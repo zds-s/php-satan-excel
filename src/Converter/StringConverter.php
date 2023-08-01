@@ -42,7 +42,6 @@ class StringConverter implements \DeathSatan\SatanExcel\Contacts\ConverterContac
      */
     public function convertToExcelData(WriterContext $writerContext): WriteCellData
     {
-        $writerContext->getCellStyle()->fontColor(Format::COLOR_RED);
         return new WriteCellData($writerContext->getValue()."\t");
     }
 }

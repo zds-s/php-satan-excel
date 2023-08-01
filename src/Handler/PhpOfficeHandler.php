@@ -105,8 +105,6 @@ class PhpOfficeHandler implements \DeathSatan\SatanExcel\Contacts\HandlerContact
     {
         $data = $this->getData();
         $spreadSheet = new Spreadsheet();
-        $excelData = $this->getExcelData();
-        $excel = $this->getExcel();
         $excelProperty = $this->getExcelProperty();
         foreach ($this->getExcelData() as $listIndex => $excelDataList)
         {
