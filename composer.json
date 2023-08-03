@@ -1,6 +1,7 @@
 {
     "name": "death_satan/satan-excel",
-    "description": "Excel fast op",
+    "description": "基于phpoffice、ext-xlswriter为底层的php版EasyExcel",
+    "keywords": ["php-office","ext-xlswriter","xlswriter","EasyExcel","excel"],
     "type": "library",
     "license": "MIT",
     "autoload": {

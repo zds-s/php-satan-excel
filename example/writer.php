@@ -1,17 +1,24 @@
 <?php
 require_once 'init.php';
-debug(function (){
-    $data = [];
-    for ($i=0;$i<10000  ;$i++)
-    {
-        $data[] = [
-            'id'    =>  randomInt(),
-            'name'  =>  randomChinese(),
-            'password'  =>  randomStr(6)
-        ];
-    }
+$data = [];
+for ($i=0;$i<10000  ;$i++)
+{
+    $data[] = [
+        'id'    =>  randomInt(),
+        'name'  =>  randomChinese(),
+        'password'  =>  randomStr(6),
+        'test1' =>  randomStr(),
+        'test2' =>  randomStr(),
+        'test3' =>  randomStr(),
+        'test4' =>  randomStr(),
+        'test5' =>  randomStr(),
+        'test6' =>  randomStr(),
+        'test7' =>  randomStr(),
+    ];
+}
+debug(function ()use ($data){
     $excel = \DeathSatan\SatanExcel\Factory::excel(new \DeathSatan\SatanExcel\Config(
-        mode: \DeathSatan\SatanExcel\Mode::MODE_XLS_WRITER
+        mode: \DeathSatan\SatanExcel\Mode::MODE_PHP_OFFICE
     ));
     $splFileInfo = $excel->write(\ExcelDto\DemoDTO::class)
         ->doSave([$data]);
