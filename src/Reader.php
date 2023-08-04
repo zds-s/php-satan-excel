@@ -3,10 +3,16 @@
 namespace DeathSatan\SatanExcel;
 
 use Closure;
+use DeathSatan\SatanExcel\Annotation\ExcelIgnore;
+use DeathSatan\SatanExcel\Annotation\ExcelIgnoreUnannotated;
 use DeathSatan\SatanExcel\Contacts\ExcelDataContact;
+use DeathSatan\SatanExcel\Contacts\ExcelIgnoreContanct;
+use DeathSatan\SatanExcel\Contacts\ExcelIgnoreUnannotatedContact;
 use DeathSatan\SatanExcel\Contacts\ExcelPropertyContact;
+use DeathSatan\SatanExcel\Contacts\ExcelPropertyFormatContact;
 use DeathSatan\SatanExcel\Contacts\HandlerContact;
 use DeathSatan\SatanExcel\Contacts\ListenerContact;
+use DeathSatan\SatanExcel\Contacts\NumberFormatContact;
 use DeathSatan\SatanExcel\Traits\ModeTrait;
 
 class Reader
@@ -15,7 +21,11 @@ class Reader
 
     protected array $excelData = [];
 
+    /** @var array Property注解 */
     protected array $excelProperty = [];
+
+    /** @var array 其他注解 */
+    protected array $excelPropertyOther = [];
 
     protected ?string $path;
 
@@ -29,6 +39,33 @@ class Reader
      * @var null|ListenerContact|Closure
      */
     protected  $listener = null;
+
+    /** @var array 默认会进行读取的ExcelProperty类 */
+    protected array $propertyAttributes = [
+        ExcelPropertyContact::class,
+        ExcelIgnoreContanct::class,
+        ExcelIgnoreUnannotatedContact::class,
+        NumberFormatContact::class,
+        ExcelPropertyFormatContact::class
+    ];
+
+    /**
+     * @param array $excelPropertyOther
+     * @return self
+     */
+    public function setExcelPropertyOther(array $excelPropertyOther): self
+    {
+        $this->excelPropertyOther = $excelPropertyOther;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExcelPropertyOther(): array
+    {
+        return $this->excelPropertyOther;
+    }
 
     /**
      * @param HandlerContact $handler

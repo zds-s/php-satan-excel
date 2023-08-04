@@ -14,7 +14,7 @@ class Config
 {
 
     public function __construct(
-        public int $mode = Mode::MODE_XLS_WRITER,
+        public int $mode = Mode::MODE_PHP_OFFICE,
         public array $annotation = [
             ExcelPropertyContact::class         =>      ExcelProperty::class,
             ExcelDataContact::class             =>      ExcelData::class,
