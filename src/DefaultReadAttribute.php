@@ -1,22 +1,26 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This is an extension of Death-Satan
+ * Name PHP-Excel
+ *
+ * @link     https://www.cnblogs.com/death-satan
+ */
 namespace DeathSatan\SatanExcel;
 
 use DeathSatan\SatanExcel\Contacts\ExcelPropertyContact;
 
 class DefaultReadAttribute implements Contacts\ReadAttributeContact
 {
-
     public function getAttributeExcelProperty(string $class, string $attribute): array
     {
         $data = [];
         $ref = new \ReflectionClass($class);
         $properties = $ref->getProperties();
-        foreach ($properties as $property)
-        {
+        foreach ($properties as $property) {
             $attributes = $property->getAttributes($attribute);
-            foreach ($attributes as $item)
-            {
+            foreach ($attributes as $item) {
                 /**
                  * @var \ReflectionAttribute $item
                  */
@@ -25,8 +29,10 @@ class DefaultReadAttribute implements Contacts\ReadAttributeContact
                 $data[$property->getName()] = $model;
             }
         }
-        array_multisort($data,SORT_ASC, array_column($data,'index'));
-        array_multisort($data,SORT_DESC, array_column($data,'order'));
+        if ($attribute === ExcelPropertyContact::class) {
+            array_multisort($data, SORT_ASC, array_column($data, 'index'));
+            array_multisort($data, SORT_DESC, array_column($data, 'order'));
+        }
 
         return $data;
     }
@@ -36,9 +42,8 @@ class DefaultReadAttribute implements Contacts\ReadAttributeContact
         $data = [];
         $ref = new \ReflectionClass($class);
         $attributes = $ref->getAttributes($attribute);
-        foreach ($attributes as $item)
-        {
-            /** @var \ReflectionAttribute $item */
+        foreach ($attributes as $item) {
+            /* @var \ReflectionAttribute $item */
             $data[] = $item->newInstance();
         }
         return $data;

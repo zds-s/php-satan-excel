@@ -3,7 +3,7 @@ require_once dirname(__DIR__).DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'
 function includeAll(?string $dirs_path = null)
 {
     $notIncludes = [
-        'read.php','writer.php','.','..'
+        'read.php','writer.php','.','..','dateformat.php'
     ];
     $dirs_path = $dirs_path ?? __DIR__;
     foreach (scandir($dirs_path) as $dir) {

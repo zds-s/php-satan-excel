@@ -1,5 +1,12 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This is an extension of Death-Satan
+ * Name PHP-Excel
+ *
+ * @link     https://www.cnblogs.com/death-satan
+ */
 namespace DeathSatan\SatanExcel\Contacts;
 
 use DeathSatan\SatanExcel\Config;
@@ -8,36 +15,29 @@ interface HandlerContact
 {
     public function __construct(Config $config);
 
-    public function openFile(string $path) : self;
+    public function openFile(string $path): self;
 
     public function setListener(ListenerContact|\Closure|null $listener): static;
 
     public function getListener(): ListenerContact|\Closure|null;
-    /**
-     * @param array $excelData
-     */
-    function setExcelData(array $excelData): void;
 
-    /**
-     * @param array $excelProperty
-     */
-    function setExcelProperty(array $excelProperty): void;
+    public function setExcelData(array $excelData): void;
 
-    /**
-     * @return array
-     */
-    function getExcelData(): array;
+    public function setExcelProperty(array $excelProperty): void;
 
-    /**
-     * @return array
-     */
-    function getExcelProperty(): array;
+    public function setExcelPropertyOther(array $excelPropertyOther): void;
+
+    public function getExcelData(): array;
+
+    public function getExcelProperty(): array;
 
     public function getRawData(): array;
 
-    public function setExcel(array $excelEntity):static;
+    public function setExcel(array $excelEntity): static;
 
-    public function getExcel():array;
+    public function setExcelClassData(array $excelClass): self;
+
+    public function getExcel(): array;
 
     public function setStartRow(int $startRow): static;
 

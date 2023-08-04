@@ -83,7 +83,9 @@ class Excel
     {
         $wirter = new Writer($this->getConfig());
         $wirter->setHandler($this->getHandler());
+        $wirter->setExcelClassData(is_string($excel)?[$excel]:$excel);
         $wirter->handleAttribute($excel);
+        $wirter->handleAttributeProperty($excel);
         return $wirter;
     }
 }

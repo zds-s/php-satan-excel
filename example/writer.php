@@ -12,7 +12,8 @@ for ($i=0;$i<10  ;$i++)
     $data[] = [
         'id'    =>  randomInt(),
         'name'  =>  randomChinese(),
-        'password'  =>  randomStr(6)
+        'password'  =>  randomStr(6),
+        'login_time'    =>  time()
     ];
 }
 debug(function ()use ($data){

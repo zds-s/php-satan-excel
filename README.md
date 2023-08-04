@@ -14,11 +14,4 @@
 - 类`java EasyExcel`式操作
 - 便捷式导入导出
 
----
-# 安装
-
-## composer
-
-```shell
-composer require death_satan/death_satan/satan-excel:^2.0 -vvv
-```
+## [中文文档](http://php-excel-docs.death-satan.com/zh)
