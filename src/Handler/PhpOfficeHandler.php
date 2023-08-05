@@ -56,13 +56,13 @@ class PhpOfficeHandler implements HandlerContact
     {
         $data = [];
         $driver = $this->driver;
-
+        $excelClass = $this->getExcelClassData();
         foreach ($this->getExcelData() as $excelDataIndex => $excelDataList) {
             $excelProperty = $this->getExcelProperty()[$excelDataIndex];
             $excelPropertyKeys = array_keys($excelProperty);
             $excelEntity = $this->getExcel()[$excelDataIndex];
 
-            foreach ($excelDataList as $excelData) {
+            foreach ($excelDataList as $excelDataIndex => $excelData) {
                 /** @var ExcelDataContact $excelData */
                 /** @var Worksheet $workSheet */
                 $sheetList = $driver->getAllSheets();
@@ -81,6 +81,16 @@ class PhpOfficeHandler implements HandlerContact
                             $converter = new ($excelProperty[$key]->converter)($this->getConfig());
                             $readContext = new ReaderContext($cell->getValue(), $row->getRowIndex(), $columnIndex, $this->getConfig());
                             $value = $converter->convertToData($readContext);
+                            $attribute = $this->getPropertyAttribute($excelClass[$excelDataIndex], $key);
+                            if ($attribute !== false) {
+                                if ($attribute instanceof DateFormat) {
+                                    $value = strtotime($value);
+                                }
+                                if ($attribute instanceof NumberFormat) {
+                                    $format = $attribute->getValue();
+                                    $value = sscanf($value, $format);
+                                }
+                            }
                             if (property_exists($entity, $key)) {
                                 $entity->{$key} = $value;
                             }
@@ -93,6 +103,9 @@ class PhpOfficeHandler implements HandlerContact
             }
         }
         $this->handleListener($entity, $cellData, 2);
+        if (count($this->getExcel()) === 1) {
+            var_dump($data);
+        }
         return $data;
     }
 

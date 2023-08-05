@@ -85,21 +85,23 @@ class XlsWriterHandler implements \DeathSatan\SatanExcel\Contacts\HandlerContact
                     $columnIndex = 0;
                     $cellData = [];
                     foreach ($values as $key => $val) {
-                        $attribute = $this->getPropertyAttribute($excelClass[$excelDataIndex], $key);
-                        if ($attribute !== false) {
-                            if ($attribute instanceof DateFormat) {
-                                $format = $attribute->getValue();
-                                $val = date($format, $val);
-                            }
-                            if ($attribute instanceof NumberFormat) {
-                                $format = $attribute->getValue();
-                                $val = sprintf($format, $val);
-                            }
-                        }
                         /** @var ConverterContact $converter */
                         $converter = new ($excelProperty[$key]->converter)($this->getConfig());
                         $readContext = new ReaderContext($val, $rowIndex, $columnIndex, $this->getConfig());
                         $value = $converter->convertToData($readContext);
+                        $attribute = $this->getPropertyAttribute($excelClass[$excelDataIndex], $key);
+                        if ($attribute !== false) {
+                            if ($attribute instanceof DateFormat) {
+                                $formatValue = strtotime($value);
+                                if ($formatValue !== false) {
+                                    $value = $formatValue;
+                                }
+                            }
+                            if ($attribute instanceof NumberFormat) {
+                                $format = $attribute->getValue();
+                                $value = sscanf($val, $format);
+                            }
+                        }
                         if (property_exists($excelEntity, $key)) {
                             $excelEntity->{$key} = $value;
                         }
@@ -126,6 +128,7 @@ class XlsWriterHandler implements \DeathSatan\SatanExcel\Contacts\HandlerContact
         $excelData = $this->getExcelData();
         $excel = $this->getExcel();
         $excelProperty = $this->getExcelProperty();
+        $excelClass = $this->getExcelClassData();
 
         $tmp = sys_get_temp_dir();
         $filename = uniqid('satanExcel');
@@ -152,6 +155,17 @@ class XlsWriterHandler implements \DeathSatan\SatanExcel\Contacts\HandlerContact
                 foreach ($activeData as $activeDataIndex => $values) {
                     ++$cellIndex;
                     foreach ($values as $key => $value) {
+                        $attribute = $this->getPropertyAttribute($excelClass[$listIndex], $key);
+                        if ($attribute !== false) {
+                            if ($attribute instanceof DateFormat) {
+                                $format = $attribute->getValue();
+                                $value = date($format, $value);
+                            }
+                            if ($attribute instanceof NumberFormat) {
+                                $format = $attribute->getValue();
+                                $value = sprintf($format, $value);
+                            }
+                        }
                         $keyAttr = $keyTran[$key];
                         /** @var ConverterContact $converter */
                         $converter = new ($keyAttr['converter'])($this->getConfig());

@@ -53,17 +53,11 @@ class Writer
         return $this->excelPropertyOther;
     }
 
-    /**
-     * @param array $excelClassData
-     */
     public function setExcelClassData(array $excelClassData): void
     {
-        $this->excelClassData = array_merge($this->excelClassData,$excelClassData);
+        $this->excelClassData = array_merge($this->excelClassData, $excelClassData);
     }
 
-    /**
-     * @return array
-     */
     public function getExcelClassData(): array
     {
         return $this->excelClassData;
@@ -147,7 +141,7 @@ class Writer
     }
 
     /**
-     * @return Reader
+     * @return Writer
      */
     public function setExcel(string $excel)
     {
@@ -174,7 +168,7 @@ class Writer
         $handler->setExcelProperty($property);
         $handler->setExcelPropertyOther($this->getExcelPropertyOther());
         $handler->setExcelClassData($this->getExcelClassData());
-        $handler->setData($data);
+        $handler->setData(count($excel) === 1 ? [$data] : $data);
         return $handler->save();
     }
 
