@@ -1,62 +1,52 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This is an extension of Death-Satan
+ * Name PHP-Excel
+ *
+ * @link     https://www.cnblogs.com/death-satan
+ */
 namespace DeathSatan\SatanExcel\Context;
 
 use DeathSatan\SatanExcel\Config;
 use DeathSatan\SatanExcel\Mode;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
-use Vtiful\Kernel\Format;
 
 class WriterContext implements \DeathSatan\SatanExcel\Contacts\WriterContext
 {
+    public function __construct(public mixed $rawValue, public int $rowIndex, public int $columnIndex, public Config $config, public object $driver)
+    {
+    }
 
-    public function __construct(public mixed $rawValue,public int $rowIndex,public int $columnIndex,public Config $config){}
+    public function getDriver(): object
+    {
+        return $this->driver;
+    }
 
-    /**
-     * @return Config
-     */
     public function getConfig(): Config
     {
         return $this->config;
     }
 
-    /**
-     * @return mixed
-     */
     public function getRawValue(): mixed
     {
         return $this->rawValue;
     }
 
-    /**
-     * @return int
-     */
     public function getColumnIndex(): int
     {
         return $this->columnIndex;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getCellStyle()
+    public function getCell()
     {
-        if ($this->isXlsWriter()){
+        if ($this->isPhpOffice()) {
             $value = $this->getRawValue();
-            if (is_array($value))
-            {
-                /** @var Cell $cell */
-                [$value,$format] = $value;
-                return $format;
-            }
-        }
-        if ($this->isPhpOffice()){
-            $value = $this->getRawValue();
-            if (is_array($value))
-            {
+            if (is_array($value)) {
                 /** @var Cell $cell */
                 [$value,$cell] = $value;
-                return $cell->getStyle();
+                return $cell;
             }
             throw new \RuntimeException('php-office not found stlye');
         }
@@ -64,7 +54,23 @@ class WriterContext implements \DeathSatan\SatanExcel\Contacts\WriterContext
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     */
+    public function getCellStyle()
+    {
+        if ($this->isXlsWriter()) {
+            $value = $this->getRawValue();
+            if (is_array($value)) {
+                /* @var Cell $cell */
+                [$value,$format] = $value;
+                return $format;
+            }
+        }
+        return $this->getCell()->getStyle();
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function getRowIndex(): int
     {
@@ -72,7 +78,7 @@ class WriterContext implements \DeathSatan\SatanExcel\Contacts\WriterContext
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isXlsWriter(): bool
     {
@@ -80,7 +86,7 @@ class WriterContext implements \DeathSatan\SatanExcel\Contacts\WriterContext
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isPhpOffice(): bool
     {
@@ -91,5 +97,4 @@ class WriterContext implements \DeathSatan\SatanExcel\Contacts\WriterContext
     {
         return $this->getRawValue()[0];
     }
-
 }

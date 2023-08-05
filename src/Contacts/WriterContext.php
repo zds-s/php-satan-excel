@@ -8,13 +8,15 @@ use Vtiful\Kernel\Format;
 
 interface WriterContext
 {
-    public function __construct(mixed $rawValue,int $rowIndex,int $columnIndex,Config $config);
+    public function __construct(mixed $rawValue,int $rowIndex,int $columnIndex,Config $config,object $driver);
 
     /**
      * @return Style|Format
      */
     public function getCellStyle();
 
+
+    public function getDriver(): object;
     /**
      * 当前行数
      * @return int

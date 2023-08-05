@@ -20,11 +20,12 @@ for ($i = 0; $i < 10; ++$i) {
         'name' => randomChinese(),
         'password' => randomStr(6),
         'login_time' => time(),
+        'image' => __DIR__ . DIRECTORY_SEPARATOR . '222.png',
     ];
 }
 debug(function () use ($data) {
     $excel = Factory::excel(new Config(
-        mode: Mode::MODE_XLS_WRITER
+        mode: Mode::MODE_PHP_OFFICE
     ));
     $splFileInfo = $excel->write(DemoDTO::class)
         ->doSave($data);

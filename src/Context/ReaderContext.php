@@ -1,5 +1,12 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This is an extension of Death-Satan
+ * Name PHP-Excel
+ *
+ * @link     https://www.cnblogs.com/death-satan
+ */
 namespace DeathSatan\SatanExcel\Context;
 
 use DeathSatan\SatanExcel\Config;
@@ -7,26 +14,22 @@ use DeathSatan\SatanExcel\Mode;
 
 class ReaderContext implements \DeathSatan\SatanExcel\Contacts\ReaderContext
 {
-    public function __construct(public mixed $rawValue,public int $rowIndex,public int $columnIndex,public Config $config){}
+    public function __construct(public mixed $rawValue, public int $rowIndex, public int $columnIndex, public Config $config)
+    {
+    }
 
-    /**
-     * @return mixed
-     */
     public function getRawValue(): mixed
     {
         return $this->rawValue;
     }
 
-    /**
-     * @return Config
-     */
     public function getConfig(): Config
     {
         return $this->config;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isXlsWriter(): bool
     {
@@ -34,7 +37,7 @@ class ReaderContext implements \DeathSatan\SatanExcel\Contacts\ReaderContext
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function isPhpOffice(): bool
     {
@@ -42,7 +45,7 @@ class ReaderContext implements \DeathSatan\SatanExcel\Contacts\ReaderContext
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getValue(): mixed
     {
@@ -50,7 +53,7 @@ class ReaderContext implements \DeathSatan\SatanExcel\Contacts\ReaderContext
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getRowIndex(): int
     {
@@ -58,11 +61,10 @@ class ReaderContext implements \DeathSatan\SatanExcel\Contacts\ReaderContext
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getColumnIndex(): int
     {
         return $this->columnIndex;
     }
-
 }

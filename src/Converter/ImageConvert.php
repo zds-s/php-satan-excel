@@ -11,15 +11,14 @@ namespace DeathSatan\SatanExcel\Converter;
 
 use DeathSatan\SatanExcel\Contacts\ReaderContext;
 use DeathSatan\SatanExcel\Contacts\WriterContext;
-use DeathSatan\SatanExcel\Traits\ConverterTrait;
 use DeathSatan\SatanExcel\WriteCellData;
+use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Address;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Vtiful\Kernel\Excel;
 
-class StringConverter implements \DeathSatan\SatanExcel\Contacts\ConverterContact
+class ImageConvert implements \DeathSatan\SatanExcel\Contacts\ConverterContact
 {
-    use ConverterTrait;
-
     /**
      * {@inheritDoc}
      */
@@ -39,7 +38,7 @@ class StringConverter implements \DeathSatan\SatanExcel\Contacts\ConverterContac
      */
     public function convertToData(ReaderContext $readerContext): string
     {
-        return str_replace("\t", '', $readerContext->getValue()) ?? '';
+        return $readerContext->getValue();
     }
 
     /**
@@ -47,6 +46,16 @@ class StringConverter implements \DeathSatan\SatanExcel\Contacts\ConverterContac
      */
     public function convertToExcelData(WriterContext $writerContext): WriteCellData
     {
-        return new WriteCellData($writerContext->getValue() . "\t");
+        if ($writerContext->isPhpOffice()) {
+            $cell = $writerContext->getCell();
+            $drawing = new Drawing();
+            $drawing->setPath($writerContext->getValue());
+            $drawing->setCoordinates(Address::cell($writerContext->getRowIndex(),$writerContext->getColumnIndex()));
+            $cell->getParent()->getParent()->getDrawingCollection()->append($drawing);
+        }
+        if ($writerContext->isXlsWriter()){
+
+        }
+        return new WriteCellData('');
     }
 }
