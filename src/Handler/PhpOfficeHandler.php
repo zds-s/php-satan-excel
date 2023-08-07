@@ -153,7 +153,7 @@ class PhpOfficeHandler implements HandlerContact
                         /** @var ConverterContact $converter */
                         $converter = new ($keyAttr['converter'])($this->getConfig());
                         $cell = $sheet->getCell([$keyAttr['rowIndex'], $cellIndex]);
-                        $context = $converter->convertToExcelData(new WriterContext([$value, $cell], $keyAttr['rowIndex'], $cellIndex, $this->getConfig()));
+                        $context = $converter->convertToExcelData(new WriterContext([$value, $cell], $keyAttr['rowIndex'], $cellIndex, $this->getConfig(),$sheet));
                         $cell->setValue($context->getValue());
                     }
                 }

@@ -170,7 +170,7 @@ class XlsWriterHandler implements \DeathSatan\SatanExcel\Contacts\HandlerContact
                         /** @var ConverterContact $converter */
                         $converter = new ($keyAttr['converter'])($this->getConfig());
                         $format = new Format($excelDirver->getHandle());
-                        $context = $converter->convertToExcelData(new WriterContext([$value, $format], $keyAttr['rowIndex'], $cellIndex, $this->getConfig()));
+                        $context = $converter->convertToExcelData(new WriterContext([$value, $format], $keyAttr['rowIndex'], $cellIndex, $this->getConfig(),$sheet));
                         $sheet->insertText($cellIndex, $keyAttr['rowIndex'], $context->getValue(), null, $format->toResource());
                     }
                 }

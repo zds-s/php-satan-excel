@@ -121,13 +121,13 @@ trait HandlerTrait
         return $this;
     }
 
-    public function getData(): array
+    public function getData()
     {
         $data = $this->data;
         if ($data instanceof \Closure) {
             $data = $data();
         }
-        return $data;
+       return $data;
     }
 
     protected function getExcelPropertyOther(): array

@@ -23,13 +23,35 @@ class DemoDTO
     #[ExcelProperty(value: '名称', index: 2)]
     public string $name;
 
-    #[ExcelProperty(value: '密码', index: 3)]
-    public string $password;
+    #[ExcelProperty(value: 'test1')]
+    public string $test1;
 
-    #[DateFormat('Y-m-d H:i:s')]
-    #[ExcelProperty(value: '登录时间', index: 4)]
-    public int $login_time;
-
-    #[ExcelProperty(value: '图片', index: 5, converter: ImageConvert::class)]
-    public string $image;
+    #[ExcelProperty(value: 'test1')]
+    public string $test111;
+    #[ExcelProperty(value: 'test1')]
+    public string $test2;
+    #[ExcelProperty(value: 'test1')]
+    public string $test3;
+    #[ExcelProperty(value: 'test1')]
+    public string $test4;
+    #[ExcelProperty(value: 'test1')]
+    public string $test5;
+    #[ExcelProperty(value: 'test1')]
+    public string $test6;
+    #[ExcelProperty(value: 'test1')]
+    public string $test7;
+    #[ExcelProperty(value: 'test1')]
+    public string $test8;
+    #[ExcelProperty(value: 'test1')]
+    public string $test9;
+    #[ExcelProperty(value: 'test1')]
+    public string $test10;
+    #[ExcelProperty(value: 'test1')]
+    public string $test11;
+    #[ExcelProperty(value: 'test1')]
+    public string $test12;
+    #[ExcelProperty(value: 'test1')]
+    public string $test13;
+    #[ExcelProperty(value: 'test1')]
+    public string $test14;
 }

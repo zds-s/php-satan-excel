@@ -47,5 +47,5 @@ interface HandlerContact
 
     public function setData(\Closure|array $data): static;
 
-    public function getData(): array;
+    public function getData();
 }

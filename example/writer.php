@@ -13,14 +13,27 @@ use DeathSatan\SatanExcel\Mode;
 use ExcelDto\DemoDTO;
 
 require_once 'init.php';
+ini_set('memory_limit',"2G");
 $data = [];
-for ($i = 0; $i < 10; ++$i) {
+for ($i = 0; $i < 100000; ++$i) {
     $data[] = [
         'id' => randomInt(),
         'name' => randomChinese(),
-        'password' => randomStr(6),
-        'login_time' => time(),
-        'image' => __DIR__ . DIRECTORY_SEPARATOR . '222.png',
+        'test1'=>randomStr(),
+        'test11'=>randomStr(),
+        'test2'=>randomStr(),
+        'test3'=>randomStr(),
+        'test4'=>randomStr(),
+        'test5'=>randomStr(),
+        'test6'=>randomStr(),
+        'test7'=>randomStr(),
+        'test8'=>randomStr(),
+        'test9'=>randomStr(),
+        'test10'=>randomStr(),
+        'test11'=>randomStr(),
+        'test12'=>randomStr(),
+        'test13'=>randomStr(),
+        'test14'=>randomStr(),
     ];
 }
 debug(function () use ($data) {
