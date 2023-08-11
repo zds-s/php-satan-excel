@@ -38,7 +38,7 @@ for ($i = 0; $i < 100000; ++$i) {
 }
 debug(function () use ($data) {
     $excel = Factory::excel(new Config(
-        mode: Mode::MODE_PHP_OFFICE
+        mode: Mode::MODE_XLS_WRITER
     ));
     $splFileInfo = $excel->write(DemoDTO::class)
         ->doSave($data);

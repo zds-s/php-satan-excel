@@ -39,7 +39,7 @@ class StringConverter implements \DeathSatan\SatanExcel\Contacts\ConverterContac
      */
     public function convertToData(ReaderContext $readerContext): string
     {
-        return str_replace("\t", '', $readerContext->getValue()) ?? '';
+        return str_replace("\t", '', (string)$readerContext->getValue()) ?? '';
     }
 
     /**

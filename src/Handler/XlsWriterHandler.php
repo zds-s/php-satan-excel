@@ -24,7 +24,7 @@ use PhpOffice\PhpSpreadsheet\Exception;
 use Vtiful\Kernel\Excel;
 use Vtiful\Kernel\Format;
 
-class XlsWriterHandler implements \DeathSatan\SatanExcel\Contacts\HandlerContact
+class XlsWriterHandler implements HandlerContact
 {
     use HandlerTrait;
 
