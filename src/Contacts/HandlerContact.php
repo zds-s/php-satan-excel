@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace DeathSatan\SatanExcel\Contacts;
 
 use DeathSatan\SatanExcel\Config;
+use DeathSatan\SatanExcel\Lib\ExcelDataResult;
 
 interface HandlerContact
 {
@@ -31,9 +32,12 @@ interface HandlerContact
 
     public function getExcelProperty(): array;
 
-    public function getRawData(): array;
-
     public function setExcel(array $excelEntity): static;
+
+    /**
+     * @return ExcelDataResult[]
+     */
+    public function getRawData(): array;
 
     public function setExcelClassData(array $excelClass): self;
 

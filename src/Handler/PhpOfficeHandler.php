@@ -19,6 +19,7 @@ use DeathSatan\SatanExcel\Contacts\HandlerContact;
 use DeathSatan\SatanExcel\Context\ReaderContext;
 use DeathSatan\SatanExcel\Context\WriterContext;
 use DeathSatan\SatanExcel\Driver;
+use DeathSatan\SatanExcel\Lib\ExcelDataResult;
 use DeathSatan\SatanExcel\Traits\HandlerTrait;
 use DeathSatan\SatanExcel\Traits\ModeTrait;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -69,7 +70,9 @@ class PhpOfficeHandler implements HandlerContact
                 foreach ($sheetList as $workSheet) {
                     $rows = $workSheet->getRowIterator($this->getStartRow() + 1);
                     $data[$excelData->getSheetIndex()] = [];
-                    $data[$excelData->getSheetIndex()]['sheetName'] = $workSheet->getTitle();
+                    $result = new ExcelDataResult();
+                    $result->setSheetName($workSheet->getTitle());
+                    $data[$excelData->getSheetIndex()] = &$result;
                     foreach ($rows as $row) {
                         $cells = $row->getCellIterator();
                         $cellData = [];
@@ -97,15 +100,12 @@ class PhpOfficeHandler implements HandlerContact
                             $cellData[$key] = $value;
                         }
                         $this->handleListener($entity, $cellData, 1);
-                        $data[$excelData->getSheetIndex()]['sheetData'][] = $entity;
+                        $result->appendSheetData($entity);
                     }
                 }
             }
         }
-        $this->handleListener($entity, $cellData, 2);
-        if (count($this->getExcel()) === 1) {
-            var_dump($data);
-        }
+        $this->handleListener($entity, $data, 2);
         return $data;
     }
 

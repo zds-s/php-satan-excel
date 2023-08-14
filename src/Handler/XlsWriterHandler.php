@@ -19,6 +19,7 @@ use DeathSatan\SatanExcel\Contacts\HandlerContact;
 use DeathSatan\SatanExcel\Context\ReaderContext;
 use DeathSatan\SatanExcel\Context\WriterContext;
 use DeathSatan\SatanExcel\Driver;
+use DeathSatan\SatanExcel\Lib\ExcelDataResult;
 use DeathSatan\SatanExcel\Traits\HandlerTrait;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Vtiful\Kernel\Excel;
@@ -71,10 +72,14 @@ class XlsWriterHandler implements HandlerContact
                 } else {
                     $sheetName = $sheetList[$excelData->getSheetIndex()];
                 }
-                $data[$excelData->getSheetIndex()] = [];
-                $data[$excelData->getSheetIndex()]['sheetName'] = $excelData->getSheetName();
+                $result = new ExcelDataResult();
+                $data[$excelData->getSheetIndex()] = &$result;
+                $result->setSheetName($excelData->getSheetName());
 
-                $sheetWorker = $excel->openSheet($sheetName)->setSkipRows($this->getStartRow());
+                $sheetWorker = $excel->openSheet($sheetName);
+                if (method_exists($sheetWorker,'setSkipRows')){
+                    $sheetWorker = $sheetWorker->setSkipRows($this->getStartRow());
+                }
                 $sheetData = $sheetWorker->getSheetData();
                 $excelProperty = $this->getExcelProperty()[$excelDataIndex];
                 $excelPropertyKeys = array_keys($excelProperty);
@@ -110,11 +115,11 @@ class XlsWriterHandler implements HandlerContact
                     }
 
                     $this->handleListener($excelEntity, $cellData, 1);
-                    $data[$excelData->getSheetIndex()]['sheetData'][] = $excelEntity;
+                    $result->appendSheetData($excelEntity);
                 }
             }
         }
-        $this->handleListener($excelEntity, $cellData, 2);
+        $this->handleListener($excelEntity, $data, 2);
         return $data;
     }
 

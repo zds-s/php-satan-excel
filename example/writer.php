@@ -15,7 +15,7 @@ use ExcelDto\DemoDTO;
 require_once 'init.php';
 ini_set('memory_limit',"2G");
 $data = [];
-for ($i = 0; $i < 100000; ++$i) {
+for ($i = 0; $i < 10;++$i) {
     $data[] = [
         'id' => randomInt(),
         'name' => randomChinese(),
