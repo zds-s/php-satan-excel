@@ -9,6 +9,7 @@ declare(strict_types=1);
  */
 namespace DeathSatan\SatanExcel\Converter;
 
+use DeathSatan\SatanExcel\Contacts\ConverterContact;
 use DeathSatan\SatanExcel\Contacts\ReaderContext;
 use DeathSatan\SatanExcel\Contacts\WriterContext;
 use DeathSatan\SatanExcel\Traits\ConverterTrait;
@@ -16,7 +17,7 @@ use DeathSatan\SatanExcel\WriteCellData;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use Vtiful\Kernel\Excel;
 
-class StringConverter implements \DeathSatan\SatanExcel\Contacts\ConverterContact
+class StringConverter implements ConverterContact
 {
     use ConverterTrait;
 

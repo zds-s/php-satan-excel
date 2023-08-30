@@ -31,4 +31,10 @@ interface ConverterContact
      * 写入转换.
      */
     public function convertToExcelData(WriterContext $writerContext): WriteCellData;
+
+    /**
+     * 是否写入
+     * @return bool
+     */
+    public function isWriter(): bool;
 }

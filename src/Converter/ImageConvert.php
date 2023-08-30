@@ -9,16 +9,20 @@ declare(strict_types=1);
  */
 namespace DeathSatan\SatanExcel\Converter;
 
+use DeathSatan\SatanExcel\Contacts\ConverterContact;
 use DeathSatan\SatanExcel\Contacts\ReaderContext;
 use DeathSatan\SatanExcel\Contacts\WriterContext;
+use DeathSatan\SatanExcel\Traits\ConverterTrait;
 use DeathSatan\SatanExcel\WriteCellData;
 use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Address;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Vtiful\Kernel\Excel;
 
-class ImageConvert implements \DeathSatan\SatanExcel\Contacts\ConverterContact
+class ImageConvert implements ConverterContact
 {
+    use ConverterTrait;
+
     /**
      * {@inheritDoc}
      */
@@ -54,7 +58,10 @@ class ImageConvert implements \DeathSatan\SatanExcel\Contacts\ConverterContact
             $cell->getParent()->getParent()->getDrawingCollection()->append($drawing);
         }
         if ($writerContext->isXlsWriter()){
-
+            if ($this->handle instanceof \Vtiful\Kernel\Excel){
+                $this->isWriter = false;
+                $this->handle->insertImage($writerContext->getRowIndex(),$writerContext->getColumnIndex(),$writerContext->getValue());
+            }
         }
         return new WriteCellData('');
     }

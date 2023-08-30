@@ -173,10 +173,12 @@ class XlsWriterHandler implements HandlerContact
                         }
                         $keyAttr = $keyTran[$key];
                         /** @var ConverterContact $converter */
-                        $converter = new ($keyAttr['converter'])($this->getConfig());
+                        $converter = new ($keyAttr['converter'])($this->getConfig(),$excelDirver);
                         $format = new Format($excelDirver->getHandle());
                         $context = $converter->convertToExcelData(new WriterContext([$value, $format], $keyAttr['rowIndex'], $cellIndex, $this->getConfig(),$sheet));
-                        $sheet->insertText($cellIndex, $keyAttr['rowIndex'], $context->getValue(), null, $format->toResource());
+                        if ($converter->isWriter()) {
+                            $sheet->insertText($cellIndex, $keyAttr['rowIndex'], $context->getValue(), null, $format->toResource());
+                        }
                     }
                 }
             }

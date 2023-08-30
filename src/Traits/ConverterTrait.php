@@ -7,7 +7,9 @@ use DeathSatan\SatanExcel\Mode;
 
 trait ConverterTrait
 {
-    public function __construct(public Config $config){}
+    protected bool $isWriter = true;
+
+    public function __construct(public Config $config,public mixed $handle){}
 
     /**
      * @return Config
@@ -25,5 +27,10 @@ trait ConverterTrait
     public function isPhpOffice(): bool
     {
         return $this->getConfig()->getMode() === Mode::MODE_PHP_OFFICE;
+    }
+
+    public function isWriter(): bool
+    {
+        return $this->isWriter ?? true;
     }
 }

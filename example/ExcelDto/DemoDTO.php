@@ -54,4 +54,7 @@ class DemoDTO
     public string $test13;
     #[ExcelProperty(value: 'test1')]
     public string $test14;
+
+    #[ExcelProperty(value: "图片",converter: ImageConvert::class)]
+    public string $image;
 }
