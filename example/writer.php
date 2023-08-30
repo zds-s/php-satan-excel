@@ -15,7 +15,7 @@ use ExcelDto\DemoDTO;
 require_once 'init.php';
 ini_set('memory_limit',"2G");
 $data = [];
-for ($i = 0; $i < 10;++$i) {
+for ($i = 0; $i < 10000;++$i) {
     $data[] = [
         'id' => randomInt(),
         'name' => randomChinese(),
@@ -34,15 +34,20 @@ for ($i = 0; $i < 10;++$i) {
         'test12'=>randomStr(),
         'test13'=>randomStr(),
         'test14'=>randomStr(),
+        'image' =>  __DIR__.DIRECTORY_SEPARATOR.'222.png'
     ];
 }
 debug(function () use ($data) {
+    // 生成excel操作类
     $excel = Factory::excel(new Config(
-        mode: Mode::MODE_XLS_WRITER
+        mode: Mode::MODE_XLS_WRITER // 使用xlsxwriter做驱动
     ));
+    // 导出到文件
     $splFileInfo = $excel->write(DemoDTO::class)
         ->doSave($data);
+    // 获取真实文件地址
     $xlsx = $splFileInfo->getRealPath();
+    // 复制到当前目录
     @copy($xlsx, __DIR__ . DIRECTORY_SEPARATOR . 'writer.xlsx');
     @unlink($xlsx);
 });
